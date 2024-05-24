@@ -1,59 +1,59 @@
 version: "3.8"
 
 services:
+  redis-node-0:
+    image: redis:latest
+    container_name: node0
+    volumes:
+      - ./redis/cluster-0/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-0/data:/data
+    network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
+
   redis-node-1:
     image: redis:latest
     container_name: node1
-    command: redis-server --port 6381 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
     volumes:
-      - ./cluster/redis-node-1-data:/data
-      - ./cluster/redis-node-1-conf:/usr/local/etc/redis
+      - ./redis/cluster-1/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-1/data:/data
     network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
 
   redis-node-2:
     image: redis:latest
     container_name: node2
-    command: redis-server --port 6382 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
     volumes:
-      - ./cluster/redis-node-2-data:/data
-      - ./cluster/redis-node-2-conf:/usr/local/etc/redis
+      - ./redis/cluster-2/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-2/data:/data
     network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
 
   redis-node-3:
     image: redis:latest
     container_name: node3
-    command: redis-server --port 6383 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
     volumes:
-      - ./cluster/redis-node-3-data:/data
-      - ./cluster/redis-node-3-conf:/usr/local/etc/redis
+      - ./redis/cluster-3/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-3/data:/data
     network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
 
   redis-node-4:
     image: redis:latest
     container_name: node4
-    command: redis-server --port 6384 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
     volumes:
-      - ./cluster/redis-node-4-data:/data
-      - ./cluster/redis-node-4-conf:/usr/local/etc/redis
+      - ./redis/cluster-4/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-4/data:/data
     network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
 
   redis-node-5:
     image: redis:latest
     container_name: node5
-    command: redis-server --port 6385 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
     volumes:
-      - ./cluster/redis-node-5-data:/data
-      - ./cluster/redis-node-5-conf:/usr/local/etc/redis
+      - ./redis/cluster-5/redis.conf:/etc/usr/local/redis.conf
+      - ./redis/cluster-5/data:/data
     network_mode: host
-
-  redis-node-6:
-    image: redis:latest
-    container_name: node6
-    command: redis-server --port 6386 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
-    volumes:
-      - ./cluster/redis-node-6-data:/data
-      - ./cluster/redis-node-6-conf:/usr/local/etc/redis
-    network_mode: host
+    command: redis-server /etc/usr/local/redis.conf
 
   redis-cluster-init:
     image: redis:latest
@@ -61,20 +61,20 @@ services:
     command: redis-server --port 6379
     network_mode: host
     depends_on:
+      - redis-node-0
       - redis-node-1
       - redis-node-2
       - redis-node-3
       - redis-node-4
       - redis-node-5
-      - redis-node-6
     volumes:
       - ./init-cluster.sh:/init-cluster.sh
     entrypoint: /bin/sh /init-cluster.sh
     environment:
       - "IP_HOST=127.0.0.1"
+      - "NODE_0_PORT=6380"
       - "NODE_1_PORT=6381"
       - "NODE_2_PORT=6382"
       - "NODE_3_PORT=6383"
       - "NODE_4_PORT=6384"
       - "NODE_5_PORT=6385"
-      - "NODE_6_PORT=6386"
