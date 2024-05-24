@@ -4,6 +4,6 @@ sleep 10
 
 # Creates the cluster
 echo "Creating the Redis cluster..."
-redis-cli --cluster create "$IP_HOST":"$NODE_0_PORT" "$IP_HOST":"$NODE_1_PORT" "$IP_HOST":"$NODE_2_PORT" \
- "$IP_HOST":"$NODE_3_PORT" "$IP_HOST":"$NODE_4_PORT" "$IP_HOST":"$NODE_5_PORT" \
+redis-cli --cluster create 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 \
+ 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385 \
  --cluster-replicas 1 --cluster-yes -a Eranga123

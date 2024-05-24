@@ -67,14 +67,4 @@ services:
       - redis-node-3
       - redis-node-4
       - redis-node-5
-    volumes:
-      - ./init-cluster.sh:/init-cluster.sh
-    entrypoint: /bin/sh /init-cluster.sh
-    environment:
-      - "IP_HOST=127.0.0.1"
-      - "NODE_0_PORT=6380"
-      - "NODE_1_PORT=6381"
-      - "NODE_2_PORT=6382"
-      - "NODE_3_PORT=6383"
-      - "NODE_4_PORT=6384"
-      - "NODE_5_PORT=6385"
+    entrypoint: [ "redis-cli --cluster create 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385 --cluster-replicas 1 --cluster-yes -a Eranga123" ]

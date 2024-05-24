@@ -3,7 +3,7 @@
 Run the following command from the project root directory:
 
 ```sh
-docker compose up -d
+start_cluster.sh
 ```
 
 ## Checking the Cluster
@@ -13,7 +13,7 @@ docker exec -it node1 bash
 ```
 
 ```sh
-redis-cli -c -p 6381
+redis-cli -c -p 6380 -a Eranga123
 ```
 
 ```sh
