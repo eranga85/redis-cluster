@@ -54,4 +54,17 @@ services:
       - ./redis/cluster-5/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+
+  redis-cluster-init:
+    image: redis:latest
+    container_name: node_init
+    command: redis-server --port 6379
+    network_mode: host
+    depends_on:
+      - redis-node-0
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
     entrypoint: ["sh", "-c", "sleep 10 && redis-cli --cluster create 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385 --cluster-replicas 1 --cluster-yes -a Eranga123"]
