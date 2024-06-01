@@ -10,9 +10,7 @@ services:
       - ./redis/cluster-0/hget.sh:/etc/usr/local/hget.sh
       - ./redis/cluster-0/hset.sh:/etc/usr/local/hset.sh
     network_mode: host
-    command: redis-server /etc/usr/local/redis.conf
-    command: sh -c chmod +x /etc/usr/local/hset.sh
-    command: sh -c chmod +x /etc/usr/local/get.sh
+    command: ["sh", "-c", "chmod +x /etc/usr/local/*.sh && redis-server /etc/usr/local/redis.conf"]
 
   redis-node-1:
     image: redis:latest
