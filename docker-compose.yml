@@ -11,6 +11,8 @@ services:
       - ./redis/cluster-0/hset.sh:/etc/usr/local/hset.sh
     network_mode: host
     command: ["sh", "-c", "chmod +x /etc/usr/local/*.sh && redis-server /etc/usr/local/redis.conf"]
+    ports:
+      - "6380:6380"
 
   redis-node-1:
     image: redis:latest
@@ -20,6 +22,8 @@ services:
       - ./redis/cluster-1/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+    ports:
+      - "6381:6381"
 
   redis-node-2:
     image: redis:latest
@@ -29,6 +33,8 @@ services:
       - ./redis/cluster-2/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+    ports:
+      - "6382:6382"
 
   redis-node-3:
     image: redis:latest
@@ -38,6 +44,8 @@ services:
       - ./redis/cluster-3/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+    ports:
+      - "6383:6383"
 
   redis-node-4:
     image: redis:latest
@@ -47,6 +55,8 @@ services:
       - ./redis/cluster-4/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+    ports:
+      - "6384:6384"
 
   redis-node-5:
     image: redis:latest
@@ -56,6 +66,8 @@ services:
       - ./redis/cluster-5/data:/data
     network_mode: host
     command: redis-server /etc/usr/local/redis.conf
+    ports:
+      - "6385:6385"
 
   redis-cluster-init:
     image: redis:latest
@@ -70,3 +82,5 @@ services:
       - redis-node-4
       - redis-node-5
     entrypoint: ["sh", "-c", "sleep 10 && redis-cli --cluster create 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385 --cluster-replicas 1 --cluster-yes -a Eranga123"]
+    ports:
+      - "6379:6379"
