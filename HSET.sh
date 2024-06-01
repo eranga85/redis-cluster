@@ -21,7 +21,7 @@ for ((i=1; i<=100; i++)); do
     random_name=$(generate_random_name $((RANDOM % 3 + 2)))  # Random length between 2 and 4 syllables
 
     redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWORD HSET card_info "$field" "$random_name"
-    redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWORD ZADD my_sorted_set $(date +%s) $field
+    redis-cli ZADD my_sorted_set $(date +%s) $field
 done
 
 echo "Insertion of 100 random names into Redis hash completed."

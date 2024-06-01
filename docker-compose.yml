@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   redis-node-0:
@@ -7,10 +7,8 @@ services:
     volumes:
       - ./redis/cluster-0/redis.conf:/etc/usr/local/redis.conf
       - ./redis/cluster-0/data:/data
-      - ./redis/cluster-0/hget.sh:/etc/usr/local/hget.sh
-      - ./redis/cluster-0/hset.sh:/etc/usr/local/hset.sh
     network_mode: host
-    command: ["sh", "-c", "chmod +x /etc/usr/local/*.sh && redis-server /etc/usr/local/redis.conf"]
+    command: redis-server /etc/usr/local/redis.conf
     ports:
       - "6380:6380"
 

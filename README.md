@@ -29,3 +29,15 @@ cluster nodes
 ```sh
 docker compose down
 ```
+
+## Test the nodes.
+
+```sh
+sudo apt-get update
+sudo apt-get install redis-tools
+```
+
+```sh
+HSET.sh
+HGET.sh
+```
